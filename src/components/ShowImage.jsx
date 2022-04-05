@@ -1,7 +1,8 @@
 import React from "react";
 import styled from "styled-components";
+import { Loading } from "./Loading";
 
-const ShowImage = ({ imageList }) => {
+const ShowImage = ({ imageList, loading }) => {
   return (
     <ShowImageContainer>
       <div className="container">
@@ -9,15 +10,19 @@ const ShowImage = ({ imageList }) => {
           <h1>All of Image</h1>
           <p>get all the image from database </p>
         </div>
-        <div className="image-container">
-          {imageList.map((image, ind) => {
-            return (
-              <div className="image" key={ind}>
-                <img src={image} alt="avatar" />
-              </div>
-            );
-          })}
-        </div>
+        {loading ? (
+          <div className="image-container">
+            {imageList.map((image, ind) => {
+              return (
+                <div className="image" key={ind}>
+                  <img src={image} alt="avatar" />
+                </div>
+              );
+            })}
+          </div>
+        ) : (
+          <Loading />
+        )}
       </div>
     </ShowImageContainer>
   );

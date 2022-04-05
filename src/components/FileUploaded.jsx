@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import styled from "styled-components";
 import { v4 } from "uuid";
 import { storage } from "./firebase.config";
-const FileUploaded = ({ setImageList }) => {
+const FileUploaded = ({ setImageList, setLoading }) => {
   const [imageUpload, setImageUpload] = useState(null);
 
   const handleFileUpload = () => {
@@ -16,8 +16,10 @@ const FileUploaded = ({ setImageList }) => {
       console.log(response);
       getDownloadURL(response.ref).then((url) => {
         setImageList((prev) => [...prev, url]);
+        setLoading(true);
       });
       toast.success("Upload file successfully!");
+      setImageUpload(null);
     });
   };
   useEffect(() => {
@@ -26,10 +28,11 @@ const FileUploaded = ({ setImageList }) => {
       response.items.forEach((item) => {
         getDownloadURL(item).then((url) => {
           setImageList((prev) => [...prev, url]);
+          setLoading(true);
         });
       });
     });
-  }, [setImageList]);
+  }, [setImageList, setLoading]);
 
   return (
     <section id="fileUploaded">

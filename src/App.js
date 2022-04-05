@@ -5,12 +5,13 @@ import FileUploaded from './components/FileUploaded';
 import ShowImage from './components/ShowImage';
 
 function App() {
- const [imageList, setImageList] = useState([])
+ const [imageList, setImageList] = useState([]);
+ const [loading, setLoading] = useState(false)
   return (
     <>
     <ToastContainer />
-     <FileUploaded setImageList={setImageList} />
-     <ShowImage imageList={imageList} />
+     <FileUploaded setImageList={setImageList} setLoading={setLoading} />
+     <ShowImage imageList={imageList} loading={loading} />
     </>
   );
 }
