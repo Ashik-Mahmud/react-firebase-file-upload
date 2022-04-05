@@ -1,11 +1,36 @@
-import React, { useState } from "react";
+import { getDownloadURL, listAll, ref, uploadBytes } from "firebase/storage";
+import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import styled from "styled-components";
-
-const FileUploaded = () => {
+import { v4 } from "uuid";
+import { storage } from "./firebase.config";
+const FileUploaded = ({ setImageList }) => {
   const [imageUpload, setImageUpload] = useState(null);
+
   const handleFileUpload = () => {
-    console.log(imageUpload);
+    if (imageUpload === null) {
+      return toast.error("Please select File for Upload.");
+    }
+    const imageRef = ref(storage, `images/${imageUpload.name} - ${v4()}`);
+    uploadBytes(imageRef, imageUpload).then((response) => {
+      console.log(response);
+      getDownloadURL(response.ref).then((url) => {
+        setImageList((prev) => [...prev, url]);
+      });
+      toast.success("Upload file successfully!");
+    });
   };
+  useEffect(() => {
+    const imageListRef = ref(storage, "/images");
+    listAll(imageListRef).then((response) => {
+      response.items.forEach((item) => {
+        getDownloadURL(item).then((url) => {
+          setImageList((prev) => [...prev, url]);
+        });
+      });
+    });
+  }, [setImageList]);
+
   return (
     <section id="fileUploaded">
       <div className="container">
@@ -52,7 +77,7 @@ const FileUploadContainer = styled.div`
     }
     button {
       padding: 0rem 1rem;
-      background-color: green;
+      background-color: #03a9f4;
       border: none;
       outline: none;
       cursor: pointer;

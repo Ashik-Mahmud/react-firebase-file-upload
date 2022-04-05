@@ -1,12 +1,16 @@
+import { useState } from 'react';
+import { ToastContainer } from 'react-toastify';
 import './App.css';
 import FileUploaded from './components/FileUploaded';
 import ShowImage from './components/ShowImage';
 
 function App() {
+ const [imageList, setImageList] = useState([])
   return (
     <>
-     <FileUploaded />
-     <ShowImage />
+    <ToastContainer />
+     <FileUploaded setImageList={setImageList} />
+     <ShowImage imageList={imageList} />
     </>
   );
 }

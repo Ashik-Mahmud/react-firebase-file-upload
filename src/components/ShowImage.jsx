@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 
-const ShowImage = () => {
+const ShowImage = ({ imageList }) => {
   return (
     <ShowImageContainer>
       <div className="container">
@@ -10,30 +10,13 @@ const ShowImage = () => {
           <p>get all the image from database </p>
         </div>
         <div className="image-container">
-          <div className="image">
-            <img
-              src="https://raw.githubusercontent.com/Ashik-Mahmud/react-volunteers-app/main/preview.png"
-              alt=""
-            />
-          </div>
-          <div className="image">
-            <img
-              src="https://raw.githubusercontent.com/Ashik-Mahmud/react-volunteers-app/main/preview.png"
-              alt=""
-            />
-          </div>
-          <div className="image">
-            <img
-              src="https://raw.githubusercontent.com/Ashik-Mahmud/react-volunteers-app/main/preview.png"
-              alt=""
-            />
-          </div>
-          <div className="image">
-            <img
-              src="https://raw.githubusercontent.com/Ashik-Mahmud/react-volunteers-app/main/preview.png"
-              alt=""
-            />
-          </div>
+          {imageList.map((image, ind) => {
+            return (
+              <div className="image" key={ind}>
+                <img src={image} alt="avatar" />
+              </div>
+            );
+          })}
         </div>
       </div>
     </ShowImageContainer>
@@ -56,6 +39,13 @@ const ShowImageContainer = styled.section`
       box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.08);
       border-radius: 4px;
       padding: 0.4rem;
+      height: 340px;
+      img {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+        object-position: center center;
+      }
     }
   }
 `;
