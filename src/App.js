@@ -11,7 +11,7 @@ function App() {
     <>
     <ToastContainer />
      <FileUploaded setImageList={setImageList} setLoading={setLoading} />
-     <ShowImage imageList={imageList} loading={loading} />
+     <ShowImage imageList={imageList} setImageList={setImageList} loading={loading} />
     </>
   );
 }
